@@ -1,0 +1,27 @@
+,下载相关软件
+sudo apt install git        //git
+sudo apt install sshd       //ssh服务器
+
+2,创建远程git仓库专用账户
+sudo adduser git            //创建git用户
+修改/etc/passwd的git用户配置，禁止远程git登录
+git:x:xxxxx:/home/git:/usr/bin/git-shell
+
+3,创建公钥
+mkdir .ssh
+touch .ssh/authorized_keys
+
+4,用户生成key
+在客户端ssh-keygen -t rsa生成公钥，私钥
+将公钥存入服务器配置文件 ssh-copy-id -i ~/.ssh/id_rsa.pub git@server:/home/git/.ssh/authorized_keys
+
+5,服务器生成空仓库
+git init --bare test.git
+
+6,客户端克隆远程仓库
+git clone git@server:/path/test.git
+
+7,修改本地文件,并推送到远程仓库
+git push origin master
+
+参考地址:https://blog.csdn.net/larrysai/article/details/12272039
