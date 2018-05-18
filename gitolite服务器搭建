@@ -1,0 +1,31 @@
+1,添加git用户
+sudo adduser git
+
+2,安装gitolite
+sudo apt install gitolite3
+或
+sudo su git
+cd $HOME
+git clone http://github.com/sitaramc/gitolite
+
+3，在客户端生成密钥对
+ssh-keygen -t rsa -f ~/.ssh/admin
+
+4，拷贝公钥到服务器
+scp ~/.ssh/admin.pub server:~/
+
+5,生成gitolite管理工程
+gitolite setup -pk admin.pub
+
+6,客户端管理员clone管理工程
+git clone git@server:gitolite-admin.git
+
+7,修改仓库及配置
+keydir/中存放各个用户公钥
+conf/中存放仓库及仓库权限配置（各个用户的读写权限)
+
+git add -A
+git commit -m "add user:xxx"
+git push
+
+
